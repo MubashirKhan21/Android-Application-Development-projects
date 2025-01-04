@@ -1,0 +1,128 @@
+Practical 4 :
+
+1. Hello World Program 
+-> Default
+
+2.Write a program to display student name and marks. 
+-> XML:
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout 
+xmlns:android="http://schemas.android.co m/apk/res/android" 
+xmlns:app="http://schemas.android.com/a pk/res-auto" 
+xmlns:tools="http://schemas.android.com/ tools"
+android:layout_width="fill_parent" 
+android:layout_height="fill_parent" 
+tools:context=".MainActivity">
+<AbsoluteLayout 
+android:layout_width="fill_parent" 
+android:layout_height="fill_parent" 
+tools:context=".MainActivity">
+<TextView
+android:id="@+id/t3" 
+android:layout_width="wrap_content"
+android:layout_height="wrap_content" 
+android:layout_x="131dp" 
+android:layout_y="264dp" 
+android:textColor="@color/black" 
+android:textSize="18dp" 
+android:textStyle="bold" />
+<TextView 
+android:id="@+id/t4"
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content"
+android:layout_x="130dp" 
+android:layout_y="303dp" 
+android:textColor="@color/black" 
+android:textSize="18dp"
+android:textStyle="bold"/>
+<TextView 
+android:id="@+id/t2"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content" 
+android:layout_x="7dp" 
+android:layout_y="111dp" 
+android:text="Student Marks" 
+android:textColor="@color/black" 
+android:textSize="18dp" 
+android:textStyle="bold"/>
+<EditText
+android:id="@+id/e2" 
+android:layout_width="246dp" 
+android:layout_height="wrap_content" 
+android:layout_x="137dp" 
+android:layout_y="97dp" />
+<Button
+android:id="@+id/button" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:layout_x="143dp" 
+android:layout_y="173dp" 
+android:text="Display"
+android:background="@color/cardview_light_bac kground"/>
+</AbsoluteLayout>
+<TextView
+android:id="@+id/t" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:layout_x="10dp" 
+android:layout_y="33dp" 
+android:text="Student Name" 
+android:textColor="@color/black" 
+android:textSize="18dp" 
+android:textStyle="bold" />
+<EditText
+android:id="@+id/e" 
+android:layout_width="246dp" 
+android:layout_height="wrap_content" 
+android:layout_x="137dp" 
+android:layout_y="21dp" />
+<TextView
+android:id="@+id/t1" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:layout_x="10dp" android:layout_y="33dp" 
+android:text="Student Name" 
+android:textColor="@color/black" 
+android:textSize="18dp" 
+android:textStyle="bold" />
+<EditText
+android:id="@+id/e1" 
+android:layout_width="246dp" 
+android:layout_height="wrap_content" 
+android:layout_x="137dp" 
+android:layout_y="21dp" />
+</AbsoluteLayout>
+
+Java:
+package myalarm.example.sujaywindow; 
+import androidx.appcompat.app.AppCompatActi vity;
+import android.widget.EditText; 
+import android.widget.Button; 
+import android.widget.TextView; 
+import android.view.View; 
+import android.os.Bundle;
+public class MainActivity extends AppCompatActivity {
+EditText editName, editMarks; 
+TextView result, result1; 
+Button display;
+@Override
+protected	void	onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+editMarks = (EditText) findViewById(R.id.e2);
+result=(TextView) findViewById(R.id.t3);
+result1=(TextView) findViewById(R.id.t4);
+display=(Button) findViewById(R.id.button);
+display.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) { 
+String	name	= editName.getText().toString();
+String	marks	= editMarks.getText().toString();
+result.setText("Name:\t"	+name);
+setContentView(R.layout.activity_main); editName	=	(EditText)findViewById(R.id.e1);
+marks);
+
+result1.setText("Marks:\t"	+marks);
+}
+});
+}
+}

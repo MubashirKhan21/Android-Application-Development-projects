@@ -1,0 +1,146 @@
+1)	Write a program to start a Wi-Fi using service. 
+activity_main.xml
+ 
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+xmlns:android="http://schemas.android.com/ap k/res/android"
+android:layout_width="match_parent" android:layout_height="match_parent">
+<ImageView android:id="@+id/imageView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_marginTop="10dp" android:src="@drawable/wifiicon" android:layout_centerHorizontal="true"/>
+<Button
+android:id="@+id/button1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Enable Wifi"
+
+android:layout_below="@+id/imageView" android:layout_centerHorizontal="true" android:layout_marginTop="40dp"/>
+<Button
+android:id="@+id/button2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Disable Wifi" android:layout_below="@+id/button1" android:layout_centerHorizontal="true" android:layout_marginTop="40dp"/>
+</RelativeLayout>
+
+MainActivity.java
+package com.example.wifi;
+import android.net.wifi.WifiManager; import android.os.Bundle;
+import android.app.Activity; import android.content.Context; import android.view.View;
+ 
+import android.view.View.OnClickListener; import android.widget.Button;
+import android.widget.Toast;
+public class MainActivity extends Activity { Button enableButton,disableButton; @Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+enableButton=(Button)findViewById(R.id.button 1);
+
+disableButton=(Button)findViewById(R.id.butto n2);
+enableButton.setOnClickListener(new OnClickListener(){
+public void onClick(View v){ WifiManager wifi = (WifiManager)
+getApplicationContext().getSystemService(Conte xt.WIFI_SERVICE);
+wifi.setWifiEnabled(true);
+
+Toast.makeText(getApplicationContext(), "Wifi turned ON", Toast.LENGTH_SHORT).show();
+}
+});
+disableButton.setOnClickListener(new OnClickListener(){
+public void onClick(View v){ WifiManager wifi = (WifiManager)
+getApplicationContext().getSystemService(Conte xt.WIFI_SERVICE);
+wifi.setWifiEnabled(false);
+
+Toast.makeText(getApplicationContext(), "Wifi turned OFf", Toast.LENGTH_SHORT).show();
+}
+});
+}
+}
+ 
+AndroidManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/ap k/res/android"
+package="com.example.wifi">
+<uses-permission android:name="android.permission.ACCESS_ WIFI_STATE" />
+<uses-permission android:name="android.permission.CHANGE_ WIFI_STATE" />
+<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name"
+ 
+
+android:roundIcon="@mipmap/ic_launcher_ro und"
+android:supportsRtl="true">
+<activity android:name=".MainActivity" android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN"
+/>
+<category android:name="android.intent.category.LAUN CHER" />
+</intent-filter>
+</activity>
+</application>
+</manifest>
+ 
+
+2)	Write a program to display the following output. Ans.
+activity_main.xml
+ 
+
+
+
+start.setOnClickListener(new
+ 
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/ap k/res/android"
+
+xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent">
+<Button
+android:id="@+id/startService" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentLeft="true" android:layout_alignParentRight="true" android:layout_alignParentTop="true" android:text="Start Service" />
+<Button
+android:id="@+id/stopservice" android:layout_width="wrap_content" android:layout_height="wrap_content"
+
+android:layout_alignLeft="@+id/startService" android:layout_alignParentRight="true" android:layout_below="@+id/startService" android:text="Stop Service" />
+</RelativeLayout>
+
+MainActivity.java
+package com.example.service; import android.os.Bundle; import android.app.Activity; import android.content.Intent; import android.view.Menu; import android.view.View; import android.widget.Button; import android.widget.Toast;
+public class MainActivity extends Activity { @Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); Button start = (Button)
+findViewById(R.id.startService); Button stop = (Button) findViewById(R.id.stopservice);
+ 
+View.OnClickListener() { @Override
+public void onClick(View v) {
+// TODO Auto-generated method stub startService(new
+Intent(MainActivity.this, MyService.class));
+
+Toast.makeText(getApplicationContext(),"Servic e Started",Toast.LENGTH_SHORT).show();
+}
+});
+stop.setOnClickListener(new View.OnClickListener() {
+
+@Override
+public void onClick(View v) {
+// TODO Auto-generated method stub stopService(new
+Intent(MainActivity.this, MyService.class));
+
+Toast.makeText(getApplicationContext(),"Servic e Stopped",Toast.LENGTH_SHORT).show();
+}
+});
+}
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+// Inflate the menu; this adds items to the action bar if it is present.
+getMenuInflater().inflate(R.menu.main, menu);
+return true;
+}
+}
+
+AndroidManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/ res/android"
+package="com.example.service">
+<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name"
+ 
+
+android:roundIcon="@mipmap/ic_launcher_rou nd"
+android:supportsRtl="true" android:theme="@style/Theme.Service">
+<activity android:name=".MainActivity" android:exported="true">
+<intent-filter>
+ 
+<action android:name="android.intent.action.MAIN" />
+<category android:name="android.intent.category.LAUNC HER" />
+</intent-filter>
+</activity>
+</application>
+</manifest>
+
+

@@ -1,0 +1,170 @@
+2) Write a program to display following output. Select any display date and time on click of “select date”, “select time” buttons respectively.
+activity_main.xml
+ 
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+xmlns:android="http://schemas.android.com/ap k/res/android"
+
+xmlns:tools="http://schemas.android.com/tools "
+android:layout_width="match_parent" android:layout_height="match_parent" tools:ignore="NamespaceTypo">
+<EditText android:layout_width="200dp" android:layout_height="wrap_content" android:id="@+id/in_date" android:layout_marginTop="82dp" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+android:layout_alignParentStart="true" />
+<Button
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SELECT DATE" android:id="@+id/btn_date"
+android:layout_alignBottom="@+id/in_date" android:layout_toRightOf="@+id/in_date"
+android:layout_toEndOf="@+id/in_date"
+/>
+<EditText android:layout_width="200dp" android:layout_height="wrap_content" android:id="@+id/in_time" android:layout_below="@+id/in_date" android:layout_alignParentLeft="true"
+android:layout_alignParentStart="true" />
+<Button
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SELECT TIME" android:id="@+id/btn_time" android:layout_below="@+id/btn_date"
+
+android:layout_alignLeft="@+id/btn_date"
+ 
+android:layout_alignStart="@+id/btn_date" />
+</RelativeLayout>
+
+MainActivity.java
+package myalarm.example.imageview; import android.app.DatePickerDialog; import android.app.TimePickerDialog; import android.os.Bundle;
+import android.view.View; import android.widget.Button;
+import android.widget.DatePicker; import android.widget.EditText; import android.widget.TimePicker; import
+androidx.appcompat.app.AppCompatActivity; import java.util.Calendar;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+Button btnDatePicker, btnTimePicker; EditText txtDate, txtTime;
+private int mYear, mMonth, mDay, mHour, mMinute;
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+btnDatePicker=(Button)findViewById(R.id.bt n_date);
+
+btnTimePicker=(Button)findViewById(R.id.bt n_time);
+
+txtDate=(EditText)findViewById(R.id.in_date
+);
+
+txtTime=(EditText)findViewById(R.id.in_tim e);
+btnDatePicker.setOnClickListener(this); btnTimePicker.setOnClickListener(this);
+}
+@Override
+public void onClick(View v) { if (v == btnDatePicker) {
+ 
+final Calendar c = Calendar.getInstance();
+mYear = c.get(Calendar.YEAR); mMonth = c.get(Calendar.MONTH); mDay =
+c.get(Calendar.DAY_OF_MONTH); DatePickerDialog datePickerDialog =
+new DatePickerDialog(this, new
+DatePickerDialog.OnDateSetListener() { @Override
+public void onDateSet(DatePicker view, int year,
+int monthOfYear,
+ 
+if (v == btnTimePicker) { final Calendar c =
+Calendar.getInstance(); mHour =
+c.get(Calendar.HOUR_OF_DAY);
+mMinute = c.get(Calendar.MINUTE); TimePickerDialog timePickerDialog =
+new TimePickerDialog(this, new
+TimePickerDialog.OnTimeSetListener() { @Override
+public void onTimeSet(TimePicker view, int hourOfDay,
+int minute) {
+ 
+int dayOfMonth) {
+
+txtDate.setText(dayOfMonth
++ "-" + (monthOfYear + 1) + "-" + year);
+ 
+
+
++ ":" + minute);
+}
+ 
+
+txtTime.setText(hourOfDay
+ 
+
+}
+}, mYear, mMonth, mDay); datePickerDialog.show();
+}
+ 
+}, mHour, mMinute, false); timePickerDialog.show();
+}
+}
+}
+
+
+1)	Write a program to display following output. Use TimePicker with Spinnermode. Ans.
+activity_main.xml
+ 
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/ap k/res/android"
+android:layout_width="match_parent" android:layout_height="match_parent">
+<ScrollView android:layout_marginTop="30dp" android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="AM/PM" android:textStyle="bold" android:textColor="@color/black" android:layout_marginLeft="100dp"/>
+<TimePicker android:id="@+id/tm1"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:timePickerMode="spinner" />
+<TextView android:id="@+id/t1"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="24 Hours" android:textStyle="bold" android:textColor="@color/black" android:layout_marginLeft="100dp" android:layout_below="@+id/tm1"/>
+<TimePicker android:id="@+id/tm2"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/t1" android:timePickerMode="spinner" />
+ 
+<TimePicker android:id="@+id/timePicker1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerHorizontal="true" android:layout_marginTop="20dp" android:layout_below="@+id/tm2"/>
+<Button
+android:id="@+id/button1" android:layout_width="wrap_content" android:layout_height="wrap_content"
+
+android:layout_below="@+id/timePicker1" android:layout_marginTop="10dp" android:layout_marginLeft="160dp" android:text="Get Date" />
+<TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/button1" android:layout_marginLeft="120dp" android:layout_marginTop="10dp" android:textStyle="bold" android:textSize="18dp"/>
+</LinearLayout>
+</ScrollView>
+</RelativeLayout>
+
+MainActivity.java
+package myalarm.example.imageview; import android.os.Build;
+import android.os.Bundle; import android.view.View; import android.widget.Button;
+import android.widget.TextView; import android.widget.TimePicker; import
+androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+ 
+TimePicker picker, picker1; Button btnGet;
+TextView tvw; @Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+ 
+
+
+23 ){
+ 
+String am_pm;
+if (Build.VERSION.SDK_INT >=
+
+hour = picker.getHour(); minute = picker.getMinute();
+}
+else{
+hour = picker.getCurrentHour(); minute =
+ 
+tvw=(TextView)findViewById(R.id.textView1
+);
+
+picker=(TimePicker)findViewById(R.id.timePi cker1);
+picker.setIs24HourView(true);
+
+picker1=(TimePicker)findViewById(R.id.tm2)
+;
+picker1.setIs24HourView(true);
+
+btnGet=(Button)findViewById(R.id.button1); btnGet.setOnClickListener(new
+View.OnClickListener() { @Override
+public void onClick(View v) { int hour, minute;
+ 
+picker.getCurrentMinute();
+}
+if(hour > 12) { am_pm = "PM"; hour = hour - 12;
+}
+else
+{
+am_pm="AM";
+}
+tvw.setText("Selected Date: "+ hour
++":"+ minute+" "+am_pm);
+}
+});
+}
+}

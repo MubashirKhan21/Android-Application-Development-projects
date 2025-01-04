@@ -1,0 +1,31 @@
+1)	Write a program to create a toggle button to display ON / OFF Bluetooth on the display screen.
+Ans.
+ 
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/ res/android" xmlns:app="http://schemas.android.com/apk/res- auto"
+android:layout_width="match_parent" android:layout_height="match_parent">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Toggle Button" android:textSize="40dp" android:textColor="@color/black" android:textStyle="bold" android:layout_centerHorizontal="true" android:layout_marginTop="20dp" />
+<ToggleButton android:id="@+id/toggleButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerHorizontal="true" android:layout_marginTop="100dp" android:text="ToggleButton" android:textOff="Off" android:textOn="On" />
+<Button
+android:id="@+id/button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/toggleButton" android:text="Submit" android:layout_centerHorizontal="true" android:layout_marginTop="40dp"/>
+</RelativeLayout>
+ 
+MainActivity.java
+package com.example.togglebutton; import android.app.Activity;
+import android.os.Bundle; import android.view.View; import android.widget.Button; import android.widget.Toast;
+import android.widget.ToggleButton;
+public class MainActivity extends Activity { private ToggleButton toggleButton1; private Button buttonSubmit;
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); addListenerOnButtonClick();
+}
+public void addListenerOnButtonClick(){ toggleButton1=(ToggleButton)findViewById(R
+.id.toggleButton); buttonSubmit=(Button)findViewById(R.id.butt on);
+buttonSubmit.setOnClickListener(new View.OnClickListener(){
+@Override
+public void onClick(View view) { StringBuilder result = new
+StringBuilder();
+result.append("Bluetooth : ").append(toggleButton1.getText()); Toast.makeText(getApplicationContext(), result.toString(),Toast.LENGTH_LONG).show ();}});
+}}
+

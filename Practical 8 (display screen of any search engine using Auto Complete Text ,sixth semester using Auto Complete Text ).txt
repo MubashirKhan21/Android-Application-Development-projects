@@ -1,0 +1,67 @@
+1)	Write a program to create a first display screen of any search engine using Auto Complete Text View.
+Ans.
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/ res/android"
+xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".MainActivity" >
+<TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" android:layout_marginTop="25dp" android:text="Search" android:textStyle="bold"
+android:textAppearance="@style/TextAppearanc e.AppCompat.Large" />
+<AutoCompleteTextView
+android:id="@+id/autoCompleteTextView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/textView2" android:layout_marginTop="36dp" android:layout_centerHorizontal="true"
+android:ems="10" />
+</RelativeLayout>
+
+MainActivity.java
+package com.example.myapplication; import android.os.Bundle;
+import android.app.Activity; import android.view.Menu;
+import android.widget.ArrayAdapter; import android.widget.AutoCompleteTextView; public class MainActivity extends Activity {
+AutoCompleteTextView autocomplete; String[] arr = { "Google", "Yahoo","Bing",
+"DuckDuckGo", "Yandex"}; @Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+
+setContentView(R.layout.activity_main); autocomplete =
+(AutoCompleteTextView)
+
+findViewById(R.id.autoCompleteTextView1
+);
+ArrayAdapter<String> adapter = new ArrayAdapter<String>
+(this,android.R.layout.select_dialog_item, arr);
+autocomplete.setThreshold(1); autocomplete.setAdapter(adapter);
+}
+}
+
+
+
+2)	Write a program to display all the subjects of sixth semester using Auto Complete Text View.
+Ans.
+ 
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/ res/android" xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".MainActivity" >
+<TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" android:layout_marginTop="25dp" android:text="Subjects"
+android:textAppearance="@style/TextAppearanc e.AppCompat.Display1"
+android:textStyle="bold" />
+<AutoCompleteTextView android:id="@+id/autoCompleteTextView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/textView2" android:layout_marginTop="36dp" android:layout_centerHorizontal="true" android:ems="10" />
+</RelativeLayout>
+
+
+MainActivity.java
+package com.example.myapplication; import android.os.Bundle;
+import android.app.Activity; import android.view.Menu;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView; public class MainActivity extends Activity {
+AutoCompleteTextView autocomplete; String[] arr = { "Mobile Application
+Development, 6th sem", "Management, 6th sem","Emerging trends in IT, 6th sem",
+"Network and Information Security, 6th
+sem"};
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); autocomplete = (AutoCompleteTextView)
+findViewById(R.id.autoCompleteTextView1); ArrayAdapter<String> adapter = new
+ArrayAdapter<String>
+
+(this,android.R.layout.select_dialog_item, arr); autocomplete.setThreshold(1); autocomplete.setAdapter(adapter);
+}
+}

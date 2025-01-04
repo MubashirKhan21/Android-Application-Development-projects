@@ -1,0 +1,196 @@
+Write a program to create the login form and display login successful / Unsuccessful toast message.
+Ans. activity_main.xml
+ 
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/ap k/res/android"
+android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+<Button
+android:id="@+id/b1" android:layout_width="150dp" android:layout_height="wrap_content" android:layout_marginLeft="140dp" android:layout_marginTop="250dp" android:text="submit" android:textSize="20dp" />
+<TextView android:id="@+id/tv1"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:layout_marginTop="81dp" android:inputType="text" android:text=" Enter Username: " android:textSize="20dp" />
+
+<EditText android:id="@+id/et2" android:layout_width="200dp"
+android:layout_height="wrap_content" android:layout_marginLeft="25dp" android:layout_marginTop="80dp" android:layout_toRightOf="@+id/tv2" android:inputType="textEmailAddress"/>
+<TextView android:id="@+id/tv2"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/tv1" android:layout_marginLeft="10dp" android:layout_marginTop="63dp"
+ 
+android:text="Enter password: "
+android:textSize="20dp" />
+<EditText android:id="@+id/et3" android:layout_width="200dp"
+android:layout_height="wrap_content" android:layout_below="@id/et2" android:layout_marginLeft="24dp" android:layout_marginTop="31dp" android:layout_toRightOf="@+id/tv2" android:inputType="textPassword" />
+<Button
+android:id="@+id/b2" android:layout_width="150dp" android:layout_height="wrap_content" android:layout_marginLeft="140dp" android:layout_marginTop="300dp" android:text="go to Login page" android:textSize="15dp" />
+</RelativeLayout>
+
+MainActivity.java
+package com.example.practical27; import
+androidx.appcompat.app.AppCompatActivity; import android.content.Intent;
+import android.os.Bundle; import android.view.View; import android.widget.Button; import android.widget.EditText; import android.widget.Toast;
+public class MainActivity extends AppCompatActivity {
+EditText Et2,Et3; Button btn, btn1; DBhandler dBhandler; @Override
+protected void onCreate(Bundle savedInstanceState) {
+ 
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+Et2 = (EditText)findViewById(R.id.et2); Et3 = (EditText)findViewById(R.id.et3); btn = (Button)findViewById(R.id.b1); btn1 = (Button) findViewById(R.id.b2); dBhandler=new
+DBhandler(MainActivity.this); btn.setOnClickListener(new
+View.OnClickListener() { @Override
+public void onClick(View view) { String email =
+Et2.getText().toString();
+String pasword = Et3.getText().toString();
+if(email.isEmpty() && pasword.isEmpty()){
+
+Toast.makeText(MainActivity.this,"Enter data",Toast.LENGTH_SHORT).show();
+}
+dBhandler.addNewCourse(email,
+pasword);
+Toast.makeText(MainActivity.this, "Submited", Toast.LENGTH_SHORT).show();
+}
+});
+btn1.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View view) { Intent i = new
+Intent(MainActivity.this, loginpage.class); startActivity(i);
+}
+});
+}
+}
+DBhandler.java
+package com.example.practical27; import android.content.ContentValues; import android.content.Context; import android.database.Cursor; import
+android.database.sqlite.SQLiteDatabase; import android.database.sqlite.SQLiteOpenHelper; public class DBhandler extends SQLiteOpenHelper {
+ 
+// creating a constant variables for our database.
+// below variable is for our database name. private static final String DB_NAME =
+"course.db";
+// below int is our database version private static final int DB_VERSION = 1;
+// below variable is for our table name. private static final String TABLE_NAME =
+"mycourses";
+// below variable is for our id column. private static final String ID_COL = "id";
+// below variable id for our course duration column.
+private static final String Email_COL = "email";
+// below variable for our course description column.
+private static final String Password_COL = "password";
+// creating a constructor for our database handler.
+public DBhandler(Context context) { super(context, DB_NAME, null,
+DB_VERSION);
+}
+// below method is for creating a database by running a sqlite query
+@Override
+public void onCreate(SQLiteDatabase db) {
+// along with their data types.
+String query = "CREATE TABLE " + TABLE_NAME + " ("
++ ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
++ Email_COL + " TEXT,"
++ Password_COL + " TEXT)"; db.execSQL(query);
+}
+public void addNewCourse(String email, String password) {
+SQLiteDatabase db = this.getWritableDatabase();
+ContentValues values = new ContentValues();
+values.put(Email_COL, email); values.put(Password_COL, password); db.insert(TABLE_NAME, null, values); db.close();
+}
+ 
+public Boolean checkuserpass(String email, String password){
+SQLiteDatabase db = this.getReadableDatabase();
+Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_NAME+" where
+"+Email_COL+" = ? and "+Password_COL+"
+= ?", new String[]{email, password}); if(cursor.getCount()>0){
+return true;
+}
+else{
+return false;
+}
+}
+@Override
+public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+}
+}
+
+Login_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/ap k/res/android"
+android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+<TextView android:id="@+id/t1"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="100dp" android:layout_marginLeft="20dp" android:text="Username: " android:textSize="20sp" />
+<EditText android:id="@+id/e1"
+android:layout_width="230dp" android:layout_height="wrap_content" android:layout_marginLeft="36dp" android:layout_marginTop="90dp" android:layout_toRightOf="@+id/t1" android:hint="Username" />
+<TextView android:id="@+id/t2"
+android:layout_width="wrap_content"
+ 
+android:layout_height="wrap_content" android:layout_marginTop="150dp" android:layout_marginLeft="20dp" android:text="Password: " android:textSize="20sp" />
+<EditText android:id="@+id/e2"
+android:layout_width="234dp" android:layout_height="wrap_content" android:layout_marginLeft="37dp" android:layout_marginTop="140dp" android:layout_toRightOf="@+id/t2" android:hint="Password" android:inputType="textPassword" />
+<Button
+android:id="@+id/b" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="150dp" android:layout_marginTop="200dp" android:text="LOGIN" />
+</RelativeLayout>
+
+Loginpage.java
+package com.example.practical27; import android.content.Intent; import android.database.Cursor; import android.os.Bundle;
+import android.view.View; import android.widget.Button; import android.widget.EditText; import android.widget.Toast; import
+androidx.appcompat.app.AppCompatActivity; public class loginpage extends AppCompatActivity {
+Button b; EditText et1, et2;
+DBhandler dbhand; @Override
+public void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.login_main); et1 = (EditText) findViewById(R.id.e1); et2 = (EditText) findViewById(R.id.e2); b = (Button) findViewById(R.id.b); dbhand = new DBhandler(loginpage.this); b.setOnClickListener(new
+View.OnClickListener() {
+ 
+@Override
+public void onClick(View v) { String email =
+et1.getText().toString();
+String pasword = et2.getText().toString();
+if(email.equals("") && pasword.equals("")){
+
+Toast.makeText(loginpage.this,"Enter data",Toast.LENGTH_SHORT).show();
+}else {
+Boolean bd = dbhand.checkuserpass(email, pasword); if(bd==true){
+Toast.makeText(loginpage.this, "Login Successful",Toast.LENGTH_LONG).show();
+Intent i = new Intent(loginpage.this, success.class);
+startActivity(i);
+}
+else{
+Toast.makeText(loginpage.this, "Login Failed",Toast.LENGTH_LONG).show();
+}
+}
+}
+});
+ 
+@Override
+public void onClick(View v) { Intent i = new Intent(success.this,
+loginpage.class);
+startActivity(i);
+}
+});
+}
+}
+
+AndroidManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/ap k/res/android"
+package="com.example.practical27">
+<uses-permission android:name="android.permission.READ_EX TERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.WRITE_EX TERNAL_STORAGE"/>
+<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name"
+
+android:roundIcon="@mipmap/ic_launcher_rou nd"
+android:supportsRtl="true"
+ 
+}
+}	android:theme="@style/Theme.Practical27">
+ 
+Success.java
+package com.example.practical27; import android.content.Intent; import android.os.Bundle;
+import android.view.View; import android.widget.Button; import
+androidx.appcompat.app.AppCompatActivity; public class success extends AppCompatActivity {
+Button btn;
+public void onCreate(Bundle b) { super.onCreate(b); setContentView(R.layout.login_s); btn = (Button) findViewById(R.id.l1); btn.setOnClickListener(new
+View.OnClickListener() {
+ 
+<activity android:name=".MainActivity" android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+<category android:name="android.intent.category.LAUNC HER" />
+</intent-filter>
+</activity>
+<activity android:name=".loginpage"/>
+<activity android:name=".success"/>
+</application>
+</manifest>

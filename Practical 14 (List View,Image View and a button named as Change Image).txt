@@ -1,0 +1,183 @@
+1)	Write a program to show the following output. Use appropriate view for the same. Ans.
+ 
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayo ut xmlns:android="http://schemas.android.com/apk/r es/android"
+xmlns:app="http://schemas.android.com/apk/res- auto"
+xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent">
+<ListView android:id="@+id/listView"
+android:layout_width="match_parent" android:layout_height="fill_parent" />
+</androidx.constraintlayout.widget.ConstraintLay out>
+
+mylist.xml
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/r es/android"
+android:id="@+id/textView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Medium Text" android:textStyle="bold"
+android:textAppearance="?android:attr/textAppear anceMedium"
+android:layout_marginLeft="10dp" android:layout_marginTop="5dp" android:padding="2dp" android:textColor="#4d4d4d" />
+
+MainActivity.java
+package myalarm.example.progressbar; import android.app.Activity;
+import android.os.Bundle; import android.view.View;
+ 
+import android.widget.AdapterView; import android.widget.ArrayAdapter; import android.widget.ListView; import android.widget.TextView; import android.widget.Toast;
+public class MainActivity extends Activity { ListView listView;
+TextView textView;
+String[] listItem = {"Android", "Java", "Php", "Hadoop", "Sap", "Python", "Ajax",
+"C++", "Ruby", "Rails", ".Net", "Perl" }; @Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+listView=(ListView)findViewById(R.id.listVi ew); textView=(TextView)findViewById(R.id.text View);
+final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+android.R.layout.simple_list_item_1, android.R.id.text1, listItem);
+listView.setAdapter(adapter); listView.setOnItemClickListener(new
+AdapterView.OnItemClickListener() { @Override
+public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+// TODO Auto-generated method
+stub
+//String value=adapter.getItem(position); Toast.makeText(getApplicationContext(),listIt em[position],Toast.LENGTH_SHORT).show(
+);
+}
+});
+}}
+
+2)	Write a program to display an image using Image View and a button named as "Change Image". Once you click on button another image should get displayed.
+Ans. activity_main.xml
+ 
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/r es/android"
+android:id="@+id/activity_main" android:layout_width="match_parent" android:layout_height="match_parent">
+<ImageView android:layout_width="200dp" android:layout_height="200dp" android:layout_centerHorizontal="true" android:id="@+id/img1"/>
+<Button
+android:layout_width="wrap_content" android:layout_height="wrap_content"
+ 
+android:layout_below="@+id/img1" android:layout_centerHorizontal="true" android:text="Change Image" android:id="@+id/button"/>
+</RelativeLayout>
+
+MainActivity.java
+package com.example.changeimage; import android.os.Bundle;
+import android.view.View; import android.widget.Button;
+import android.widget.ImageView; import
+androidx.appcompat.app.AppCompatActivity;
+ 
+public class MainActivity extends AppCompatActivity {
+Button b1; ImageView iv; boolean flag; int
+images[]={R.drawable.ic1,R.drawable.ic2,R.draw able.ic3};
+int i=0; @Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+iv=(ImageView) findViewById(R.id.img1);
+b1=(Button) findViewById(R.id.button); flag=true;
+b1.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) { iv.setImageResource(images[i]); i++;
+if(i==3) i=0;
+}
+});
+}
+
+
+3)	Write a program to display 15 buttons using grid view. 
+Ans.
+activity_main.xml
+ 
+<?xml version="1.0" encoding="utf-8"?>
+<GridView xmlns:android="http://schemas.android.com/apk/r es/android"
+android:id="@+id/gridView1" android:numColumns="auto_fit" android:gravity="center" android:columnWidth="50dp" android:stretchMode="columnWidth" android:layout_width="fill_parent" android:layout_height="fill_parent" >
+</GridView>
+
+MainActivity.java
+package com.example.gridview; import android.os.Bundle; import android.app.Activity; import android.view.Menu; import android.view.View;
+import android.widget.AdapterView; import
+android.widget.AdapterView.OnItemClickListener
+;
+import android.widget.ArrayAdapter; import android.widget.GridView; import android.widget.TextView; import android.widget.Toast;
+public class MainActivity extends Activity { GridView gridView;
+static final String[] numbers = new String[] { "1", "2", "3", "4", "5",
+"6", "7", "8", "9",
+"10","11","12","13","14","15"};
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); gridView = (GridView)
+findViewById(R.id.gridView1); ArrayAdapter<String> adapter = new
+ArrayAdapter<String>(this,
+android.R.layout.simple_list_item_1, numbers);
+gridView.setAdapter(adapter);
+ 
+gridView.setOnItemClickListener(new OnItemClickListener() {
+@Override public void
+onItemClick(AdapterView<?> parent, View view, int position,long id) {
+
+Toast.makeText(getApplicationContext(),((Te xtView) view).getText(), Toast.LENGTH_SHORT).show();
+}
+});
+}
+@Override public boolean
+onCreateOptionsMenu(Menu menu) {
+// Inflate the menu; this adds items to the action bar if it is present.
+
+getMenuInflater().inflate(R.menu.activity_mai n, menu);
+return true;
+}}
+
+4)	Write a program to display a text view using vertical scroll view. Ans.
+ 
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/r es/android"
+android:layout_width="match_parent" android:layout_height="match_parent">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+
+android:textAppearance="?android:attr/textAppear anceMedium"
+android:text="Vertical ScrollView example" android:id="@+id/textView" android:layout_gravity="center_horizontal" android:layout_centerHorizontal="true" android:layout_alignParentTop="true" />
+ 
+<ScrollView android:layout_marginTop="30dp"
+android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/scrollView">
+<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" >
+<TextView android:layout_width="wrap_content"
+android:layout_height="wrap_content" android:text="Sam Curran" android:layout_gravity="center" android:textColor="@color/black" android:textStyle="bold"
+ 
+android:textSize="50dp"/>
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="David Miller" android:layout_gravity="center" android:textColor="@color/black" android:textStyle="bold" android:textSize="50dp" android:layout_marginTop="20dp"/>
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="David Warner" android:layout_gravity="center" android:textColor="@color/black" android:textStyle="bold" android:textSize="50dp" android:layout_marginTop="20dp"/>
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mitchell Starc" android:layout_gravity="center" android:textColor="@color/black" android:textStyle="bold" android:textSize="50dp" android:layout_marginTop="20dp"/>
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Shane Warne" android:layout_gravity="center" android:textColor="@color/black" android:textStyle="bold" android:textSize="50dp" android:layout_marginTop="20dp"/>
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tom Curran" android:layout_gravity="center" android:textColor="@color/black" android:textStyle="bold" android:textSize="50dp" android:layout_marginTop="20dp"/>
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+ 
+android:text="Joseph" android:layout_gravity="center" android:textColor="@color/black" android:textStyle="bold" android:textSize="50dp"
+
+android:layout_marginTop="20dp"/>
+<TextView
+android:layout_width="wrap_content" android:layout_height="wrap_content"
+android:text="Kane Williamson" android:layout_gravity="center" android:textColor="@color/black" android:textStyle="bold" android:textSize="50dp"
+
+android:layout_marginTop="20dp"/>
+<TextView
+android:layout_width="wrap_content" android:layout_height="wrap_content"
+android:text="Russell" android:layout_gravity="center" android:textColor="@color/black" android:textStyle="bold" android:textSize="50dp"
+
+android:layout_marginTop="20dp"/>
+<TextView android:layout_width="wrap_content"
+android:layout_height="wrap_content" android:text="Chris Gayle" android:layout_gravity="center" android:textColor="@color/black" android:textStyle="bold" android:textSize="50dp"
+
+android:layout_marginTop="20dp"/>
+<TextView android:layout_width="wrap_content"
+android:layout_height="wrap_content" android:text="Robin Joseph"
+android:layout_gravity="center" android:textColor="@color/black" android:textStyle="bold" android:textSize="50dp" android:layout_marginTop="20dp"/>
+</LinearLayout>
+</ScrollView>
+</RelativeLayout>
+
+MainActivity.java
+ 
+import androidx.appcompat.app.AppCompatActivity; import android.os.Bundle;
+public class MainActivity extends AppCompatActivity {
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+ 
+package com.example.scrollview;	}
+}
+
+

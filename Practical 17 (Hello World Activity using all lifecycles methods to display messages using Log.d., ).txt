@@ -1,0 +1,37 @@
+Write a program to create a Hello World Activity using all lifecycles methods to display messages using Log.d.
+Ans. activity_main.xml
+ 
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+xmlns:android="http://schemas.android.com/ap k/res/android"
+android:layout_width="match_parent" android:layout_height="match_parent">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hello World!" android:textColor="@color/black" android:textSize="40dp" android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+</RelativeLayout>
+
+MainActivity.java
+package com.example.activity; import android.app.Activity; import android.os.Bundle; import android.util.Log;
+public class MainActivity extends Activity { @Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); Log.d("lifecycle","onCreate invoked");
+}
+ 
+@Override
+protected void onStart() { super.onStart(); Log.d("lifecycle","onStart invoked");
+}
+@Override
+protected void onResume() { super.onResume(); Log.d("lifecycle","onResume invoked");
+}
+@Override
+protected void onPause() { super.onPause(); Log.d("lifecycle","onPause invoked");
+}
+@Override
+protected void onStop() { super.onStop(); Log.d("lifecycle","onStop invoked");
+}
+@Override
+protected void onRestart() { super.onRestart(); Log.d("lifecycle","onRestart invoked");
+}
+@Override
+protected void onDestroy() { super.onDestroy(); Log.d("lifecycle","onDestroy invoked");
+}
+}

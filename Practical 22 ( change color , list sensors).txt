@@ -1,0 +1,158 @@
+1)	Write a program to change the background color when device is shuffled. Ans.
+activity_main.xml
+ 
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/ap k/res/android"
+
+xmlns:tools="http://schemas.android.com/tools "
+android:layout_width="match_parent" android:layout_height="match_parent">
+<TextView android:id="@+id/textView" android:layout_width="match_parent"
+android:layout_height="match_parent" android:text="Shake to switch color" />
+</RelativeLayout>
+ 
+sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+lastUpdate = System.currentTimeMillis();
+}
+//overriding two methods of SensorEventListener
+@Override
+public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+@Override
+public void onSensorChanged(SensorEvent event) {
+if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+getAccelerometer(event);
+}
+ 
+MainActivity.java
+package com.example.sensor; import android.app.Activity; import android.graphics.Color; import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener; import android.hardware.SensorManager; import android.os.Bundle;
+import android.view.View; import android.widget.Toast;
+public class MainActivity extends Activity implements SensorEventListener{
+private SensorManager sensorManager; private boolean isColor = false;
+private View view; private long lastUpdate; @Override
+public void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); view = findViewById(R.id.textView);
+ 
+}
+private void getAccelerometer(SensorEvent event) {
+float[] values = event.values;
+// Movement
+float x = values[0]; float y = values[1]; float z = values[2];
+float accelationSquareRoot = (x * x + y * y
++ z * z)
+/ (SensorManager.GRAVITY_EARTH
+* SensorManager.GRAVITY_EARTH);
+
+long actualTime = System.currentTimeMillis();
+
+Toast.makeText(getApplicationContext(),String.v alueOf(accelationSquareRoot)+" "+
+
+SensorManager.GRAVITY_EARTH,Toast.LEN GTH_SHORT).show();
+if (accelationSquareRoot >= 2) //it will be executed if you shuffle
+{
+ 
+
+view.setBackgroundColor(Color.GREEN);
+ 
+if (actualTime - lastUpdate < 200) {
+return;
+ 
+}
+lastUpdate = actualTime;//updating lastUpdate for next shuffle
+if (isColor) { view.setBackgroundColor(Color.GREEN);
+} else {
+
+view.setBackgroundColor(Color.RED);
+}
+isColor = !isColor;
+}
+}
+@Override
+protected void onResume() { super.onResume();
+ 
+// register this class as a listener for the orientation and
+// accelerometer sensors
+
+sensorManager.registerListener(this,sensorManag er.getDefaultSensor(Sensor.TYPE_ACCELERO METER),
+
+SensorManager.SENSOR_DELAY_NORMAL);
+}
+@Override
+protected void onPause() {
+// unregister listener super.onPause();
+sensorManager.unregisterListener(this);
+}
+}
+
+2)	Write a program to display the list of sensors supported by the mobile device. Ans.
+ 
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+xmlns:android="http://schemas.android.com/ap k/res/android"
+android:layout_width="match_parent" android:layout_height="match_parent">
+<TextView android:text="Sensor "
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/textview" android:textSize="35dp" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" />
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="AISSMS" android:id="@+id/textView" android:layout_below="@+id/textview" android:layout_centerHorizontal="true" android:textColor="#ff7aff24" android:textSize="35dp" />
+<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView" android:src="@drawable/poly" android:layout_below="@+id/textView" android:layout_centerHorizontal="true"
+ 
+MainActivity.java
+package com.example.sensorlist; import android.app.Activity;
+import android.hardware.SensorManager; import android.os.Bundle;
+import android.view.Menu; import android.view.MenuItem; import android.view.View; import android.widget.TextView; import java.util.List;
+import android.hardware.Sensor;
+public class MainActivity extends Activity { TextView tv1=null;
+private SensorManager mSensorManager; @Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); tv1 = (TextView)
+findViewById(R.id.textView2); tv1.setVisibility(View.GONE); mSensorManager = (SensorManager)
+getSystemService(SENSOR_SERVICE); List<Sensor> mList=
+mSensorManager.getSensorList(Sensor.TYPE_A LL);
+for (int i = 1; i < mList.size(); i++) { tv1.setVisibility(View.VISIBLE); tv1.append("\n" + mList.get(i).getName()
++ "\n" + mList.get(i).getVendor() + "\n" + mList.get(i).getVersion());
+}
+ 
+android:theme="@style/Base.TextAppearance. AppCompat" />
+<TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content"
+android:layout_below="@+id/imageView" android:layout_alignParentStart="true" android:layout_alignParentLeft="true" android:layout_alignParentEnd="true" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" android:text="New Text" />
+</RelativeLayout>
+ 
+}
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+// Inflate the menu; this adds items to the action bar if it is present.
+
+getMenuInflater().inflate(R.menu.menu_main, menu);
+return true;
+}
+@Override public boolean
+onOptionsItemSelected(MenuItem item) {
+ 
+// Handle action bar item clicks here. The action bar will
+// automatically handle clicks on the Home/Up button, so long
+// as you specify a parent activity in AndroidManifest.xml.
+int id = item.getItemId();
+//noinspection SimplifiableIfStatement if (id == R.id.action_settings) {
+return true;
+}
+return super.onOptionsItemSelected(item);
+}
+}
+
+AndroidManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/ap k/res/android"
+ 
+package="com.example.sensorlist" >
+<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name">
+<activity android:name=".MainActivity" android:label="@string/app_name" android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+<category android:name="android.intent.category.LAUNC HER" />
+</intent-filter>
+</activity>
+</application>
+</manifest>
+ 
+

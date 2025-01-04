@@ -1,0 +1,136 @@
+1)	Write a program to create a text field and a button "Navigate". When you enter "www.google.com" and press navigate button it should open google page.
+Ans. activity_main.xml
+ 
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/ap k/res/android"
+android:layout_width="match_parent" android:layout_height="match_parent">
+<EditText android:id="@+id/e1"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerHorizontal="true" android:layout_marginTop="80dp" android:ems="10" />
+<Button
+android:id="@+id/b1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Visit" android:layout_below="@+id/e1" android:layout_centerHorizontal="true" android:layout_marginTop="40dp"/>
+</RelativeLayout>
+
+MainActivity.java
+package com.example.implicitintent; import android.content.Intent; import android.net.Uri;
+import android.os.Bundle; import android.view.View; import android.widget.Button; import android.widget.EditText; import
+androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+Button button; EditText editText; @Override
+ 
+protected void onCreate(Bundle
+savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); button = findViewById(R.id.b1); editText = findViewById(R.id.e1); button.setOnClickListener(new
+View.OnClickListener() { @Override
+public void onClick(View view) {
+String url=editText.getText().toString();
+Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+startActivity(intent);
+}
+});
+}
+}
+
+
+
+2)	Write a program to create button "Start Dialer". When you click on this button it should open the phone dialer.
+Ans. activity_main.xml
+ 
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android =
+"http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent">
+<Button
+android:id="@+id/b1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Start Dialer" android:layout_centerHorizontal="true" android:layout_centerVertical="true"/>
+</RelativeLayout>
+
+MainActivity.java
+package com.example.dialer; import
+androidx.appcompat.app.AppCompatActivity; import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle; import android.view.View; import android.widget.Button;
+public class MainActivity extends AppCompatActivity {
+Button b1; @Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); b1=(Button)findViewById(R.id.b1); b1.setOnClickListener(new
+View.OnClickListener() { @Override
+public void onClick(View v) { Intent intent = new
+Intent(Intent.ACTION_DIAL);
+intent.setData(Uri.parse("tel:" + "+917420863430"));
+startActivity(intent);
+});
+}
+}
+}
+
+3)	Write a program to create two screens. First screen will take one number input from user. After click on Factorial button, second screen will open and it should display factorial of the same number. Also specify which type of intent you will use in this case.
+Ans. activity_main.xml
+ 
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/ap k/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+<EditText android:id="@+id/input_num" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="100dp"
+ 
+android:layout_marginEnd="120dp"
+android:layout_marginTop="180dp" />
+<Button android:id="@+id/b1" android:text="Factorial"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="100dp" android:layout_marginTop="20dp" android:layout_marginEnd="120dp"/>
+</LinearLayout>
+ 
+secondactivity.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/ap k/res/android"
+android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+<TextView android:id="@+id/answer" android:layout_width="match_parent" android:layout_height="wrap_content"
+android:layout_gravity="center_horizontal" android:textStyle="bold" android:textColor="@color/black" android:textSize="40dp"/>
+</LinearLayout>
+
+MainActivity.java
+package myalarm.example.intent; import android.app.Activity; import android.content.Intent; import android.os.Bundle;
+import android.widget.EditText; import android.widget.Button; import android.view.View;
+public class MainActivity extends Activity{ private EditText n;
+private Bundle bundle; @Override
+protected void onCreate(Bundle b) { super.onCreate(b); setContentView(R.layout.activity_main);
+n = (EditText) findViewById(R.id.input_num); Button b2 = (Button) findViewById(R.id.b1); Bundle bundle = new Bundle(); b2.setOnClickListener(new View.OnClickListener(){
+@Override
+public void onClick(View view) {
+int val = Integer.parseInt(n.getText().toString()); bundle.putInt("naval",val);
+Intent	intent	=	new Intent(getApplicationContext(), Answer.class); intent.putExtras(bundle);
+startActivity(intent);
+}
+});
+}
+}
+ 
+Answer.java
+package myalarm.example.intent; import android.content.Intent; import android.os.Bundle;
+import android.widget.TextView; import
+androidx.appcompat.app.AppCompatActivity; public	class	Answer	extends AppCompatActivity {
+@Override
+protected	void	onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.secondactivity);
+Intent intent = getIntent();
+Bundle bundle = intent.getExtras();
+TextView	textView	=	(TextView) findViewById(R.id.answer);
+int val = bundle.getInt("naval"); int i,x=1;
+for(i=1;i<=val;i++){ x=x*i;
+}
+String txt = Integer.toString(x); textView.setText("Factorial: "+txt);
+}
+}
+
+AndroidManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/ap k/res/android" package="myalarm.example.intent">
+<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name"
+android:roundIcon="@mipmap/ic_launcher_rou nd"
+android:supportsRtl="true" android:theme="@style/Theme.Intent">
+<activity android:name=".MainActivity" android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+<category android:name="android.intent.category.LAUNCHER" />
+</intent-filter>
+</activity>
+<activity android:name=".Answer" android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+<category android:name="android.intent.category.LAUNCHER" />
+</intent-filter>
+</activity>
+</application>
+</manifest>
+

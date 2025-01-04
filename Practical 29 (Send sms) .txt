@@ -1,0 +1,65 @@
+Write a program to send Make use of following GUI. 
+Ans.
+Program for sending SMS. 
+
+activity_main.xml
+ 
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/ap k/res/android"
+android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" >
+<TextView android:id="@+id/toPhoneNumberTV" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Phone Number" />
+<EditText android:id="@+id/toPhoneNumberEt" android:layout_width="fill_parent" android:layout_height="wrap_content" android:inputType="phone"/>
+<TextView android:id="@+id/smsMessageTV" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SMS Message" />
+<EditText android:id="@+id/smsMessageET" android:layout_width="fill_parent" android:layout_height="wrap_content" android:inputType="textMultiLine"/>
+<Button android:id="@+id/sendSMSBtn" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Send SMS"/>
+</LinearLayout>
+
+MainActivity.java
+package com.example.practical29; import android.Manifest;
+import android.content.pm.PackageManager; import android.os.Bundle;
+import android.telephony.SmsManager;
+ 
+import android.view.View;
+import android.widget.Button; import android.widget.EditText; import android.widget.Toast; import
+androidx.appcompat.app.AppCompatActivity; import androidx.core.app.ActivityCompat; public class MainActivity extends AppCompatActivity {
+Button sendSMSBtn; EditText toPhoneNumberET; EditText smsMessageET; @Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); toPhoneNumberET = (EditText)
+findViewById(R.id.toPhoneNumberEt); smsMessageET = (EditText)
+findViewById(R.id.smsMessageET); sendSMSBtn = (Button)
+findViewById(R.id.sendSMSBtn); ActivityCompat.requestPermissions(MainActivi ty.this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS},Package Manager.PERMISSION_GRANTED);
+sendSMSBtn.setOnClickListener(new View.OnClickListener() {
+public void onClick(View view) { sendSMS();} }); }
+protected void sendSMS() { String toPhoneNumber =
+toPhoneNumberET.getText().toString(); String smsMessage =
+smsMessageET.getText().toString(); try {
+SmsManager smsManager = SmsManager.getDefault();
+ 
+
+smsManager.sendTextMessage(toPhoneNumbe r, null, smsMessage, null, null); Toast.makeText(getApplicationContext(), "SMS sent.",Toast.LENGTH_LONG).show();
+} catch (Exception e) { Toast.makeText(getApplicationContext(), "Sending SMS failed.", Toast.LENGTH_LONG).show();
+e.printStackTrace();
+}}}
+
+AndroidManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/ap k/res/android"
+package="com.example.practical29">
+<uses-permission android:name="android.permission.SEND_SM S" />
+<uses-permission android:name="android.permission.READ_SM S"/>
+ 
+<uses-permission android:name="android.permission.INTERNET "/>
+<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name"
+
+android:roundIcon="@mipmap/ic_launcher_rou nd"
+android:supportsRtl="true"
+
+android:theme="@style/Theme.Practical29">
+<activity android:name=".MainActivity" android:exported="true">
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+<category android:name="android.intent.category.LAUNC HER" />
+</intent-filter>
+</activity>
+</application>
+</manifest>
